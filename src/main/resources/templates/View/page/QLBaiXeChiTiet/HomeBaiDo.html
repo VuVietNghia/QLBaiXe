@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Bãi Đỗ Xe</title>
+    <style>
+        /* =================== CẤU TRÚC CHUNG =================== */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .containerHomeAdmin {
+            width: 90%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .bodyAdminHome {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            color: #0072ff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            background-color: #0056b3;
+            color: white;
+            padding: 14px 24px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .dropdown-menu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+
+        /* =================== NÚT =================== */
+        .btn-them-bai-do {
+            display: block;
+            width: max-content;
+            padding: 12px 20px;
+            background: #4aad4a;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .btn-them-bai-do:hover {
+            background: rgb(36, 86, 46);
+            transform: scale(1.05);
+        }
+
+        /* =================== LƯỚI HIỂN THỊ BÃI XE =================== */
+        .row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        /* =================== CARD =================== */
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* =================== HÌNH ẢNH TRONG CARD =================== */
+        .card-image img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        /* =================== THÔNG TIN TRONG CARD =================== */
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            color: #0072ff;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .info-row p {
+            font-size: 14px;
+            color: #333;
+            font-weight: normal;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="containerHomeAdmin">
+    <div class="bodyAdminHome">
+        <h1>Danh Sách Bãi Đỗ</h1>
+        <hr>
+
+        <div class="dropdown">
+            <button class="dropdown-toggle">Quản Lý</button>
+            <div class="dropdown-menu">
+                <a th:href="@{/ql_baiDo}">Bãi Đỗ Xe</a>
+                <a th:href="@{/ql_baiXe}">Bãi Đỗ Xe Đang Hoạt Động</a>
+            </div>
+        </div>
+        <a href="/bai-xe/them" class="btn-them-bai-do">Thêm Bãi Đỗ Xe</a>
+        <hr>
+
+        <div class="row">
+            <th:block th:each="bx, index : ${listBaiDo}">
+                <a th:href="@{/bai-do/detail/{id}(id=${bx.id})}">
+                    <div class="card">
+                        <div class="card-image">
+                            <img th:src="@{/image/logo.png}" alt="logo">
+                        </div>
+                        <div class="card-content">
+                            <div class="info-row"><span>Bãi Đỗ Số:</span> <p th:text="${index.index + 1}"></p></div>
+                            <div class="info-row"><span>Mã Bãi Đỗ:</span> <p th:text="${bx.maKhuVuc}"></p></div>
+                            <div class="info-row"><span>Tên Bãi Đỗ:</span> <p th:text="${bx.tenKhuVuc}"></p></div>
+                            <div class="info-row"><span>Sức Chứa Tối Đa:</span> <p th:text="${bx.sucChuaToiDa}"></p></div>
+                            <div class="info-row"><span>Trạng Thái:</span> <p th:text="${bx.trangThai}"></p></div>
+                        </div>
+                    </div>
+                </a>
+            </th:block>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:inline="javascript">
+    var loi = [[${loi}]];
+    var trangThai = [[${trangThai}]];
+
+    if (loi) {
+        Swal.fire({
+            title: trangThai === "success" ? "Thành công!" : "Lỗi!",
+            text: loi,
+            icon: trangThai === "success" ? "success" : "error",
+            confirmButtonText: "OK"
+        });
+        console.log("chạy"+loi.values())
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Liên hệ - Bãi xe KTX Ipart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #f1f2f6, #ffffff);
+        }
+
+        .contact-header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .contact-header h1 {
+            font-size: 2.5rem;
+        }
+
+        .contact-section {
+            padding: 60px 30px;
+        }
+
+        .contact-card {
+            border-radius: 20px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            padding: 30px;
+            background-color: white;
+        }
+
+        .contact-info i {
+            font-size: 20px;
+            color: #0d6efd;
+            margin-right: 10px;
+        }
+
+        .map-container {
+            height: 300px;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .form-control, .btn {
+            border-radius: 12px;
+        }
+
+        .btn-send {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .btn-send:hover {
+            background-color: #0b5ed7;
+        }
+
+        @media screen and (max-width: 768px) {
+            .contact-section {
+                padding: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="contact-header">
+    <h1>Liên hệ với chúng tôi</h1>
+    <p>Mọi thắc mắc về bãi trông giữ xe KTX, vui lòng để lại thông tin bên dưới</p>
+</div>
+
+<div class="container contact-section">
+    <div class="row g-4">
+        <!-- Thông tin liên hệ -->
+        <div class="col-md-5">
+            <div class="contact-card h-100">
+                <h4 class="mb-4">Thông tin liên hệ</h4>
+                <div class="contact-info mb-3"><i class="bi bi-geo-alt-fill"></i> Ký túc xá Sinh viên Ipart, Q. Thủ Đức, TP.HCM</div>
+                <div class="contact-info mb-3"><i class="bi bi-telephone-fill"></i> 0909 123 456</div>
+                <div class="contact-info mb-3"><i class="bi bi-envelope-fill"></i> support@ipart.edu.vn</div>
+                <div class="map-container mt-4">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d29749.649915642596!2d105.9618816!3d21.2434944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1744194728352!5m2!1svi!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form liên hệ -->
+        <div class="col-md-7">
+            <div class="contact-card">
+                <h4 class="mb-4">Gửi phản hồi nhanh</h4>
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Họ và tên" required>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="email" class="form-control" placeholder="Email liên hệ" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Tiêu đề" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" rows="5" placeholder="Nội dung phản hồi..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-send w-100">Gửi phản hồi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.js"></script>
+</body>
+</html>

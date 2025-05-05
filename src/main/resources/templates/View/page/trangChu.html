@@ -1,0 +1,136 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+</head>
+<body>
+<div class="container_trangChu">
+<div class="image_header">
+</div>
+    <div class="sangLap">
+    <div class="admin">
+        <a th:href="@{/thongTinSangLap}" class="admin_img">
+            <img src="../../../image/admin.jpg" style="height: 100%; width: 100%; border-radius: 50%">
+        </a>
+        <div class="admin_text">
+            <p style="font-weight: bolder">Lưu Sơn Trường <br><span style="font-weight: normal">(Tổng giám đốc)</span></p>
+        </div>
+    </div>
+        <div class="admin">
+            <a th:href="@{/thongTinSangLap}" class="admin_img">
+                <img src="../../../image/dang.png" style="height: 100%; width: 100%;border-radius: 50%">
+            </a>
+            <div class="admin_text">
+                <p style="font-weight: bolder">Nguyễn Hải Đăng <br><span style="font-weight: normal">(Phó giám đốc)</span></p>
+            </div>
+        </div>
+        <div class="admin">
+            <a th:href="@{/thongTinSangLap}" class="admin_img">
+                <img src="../../../image/nghia.png" style="height: 100%; width: 100%;border-radius: 50%">
+            </a>
+            <div class="admin_text">
+                <p style="font-weight: bolder">Vũ Việt Nghĩa<br><span style="font-weight: normal">(Phó giám đốc)</span></p>
+            </div>
+        </div>
+        <div class="admin">
+            <a th:href="@{/thongTinSangLap}" class="admin_img">
+                <img src="../../../image/quyen.png" style="height: 100%; width: 100%;border-radius: 50%">
+            </a>
+            <div class="admin_text">
+                <p style="font-weight: bolder">Nhữ Văn Quyền<br><span style="font-weight: normal">(Phó giám đốc)</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="content_text">
+    <div class="content_text_left">
+        <h3 style="text-align: center; margin-bottom: 20px">Thông tin Về Ipark</h3>
+    <p style="color: gray">"iPart – Giải pháp bãi gửi xe thông minh, an toàn và tiện lợi hàng đầu, ứng dụng công nghệ hiện đại giúp quản lý tự động,
+        giám sát 24/7 và mang đến trải nghiệm gửi xe nhanh chóng, hiệu quả cho người dùng".</p>
+        <p style="margin-left: 80%; font-family: 'Berlin Sans FB'">-- Sivar --</p>
+    </div>
+        <div class="content_text_right">
+
+        </div>
+    </div>
+</div>
+<df-messenger
+        intent="WELCOME"
+        chat-title="iPark."
+        agent-id="ed128b7e-de46-411a-9a5b-8d16b31607e0"
+        language-code="vi"
+></df-messenger>
+</body>
+</html>
+<style>
+    body{
+        padding: 0px;
+    }
+    .container_trangChu{
+        height: 1340px;
+        width: 100%;
+    }
+    .image_header{
+        height: 680px;
+        width: 100%;
+        background: url("../../../image/Banner_Ipart.png");
+        background-repeat: repeat;
+        background-size: 100% 100%;
+    }
+    .sangLap{
+        height: 200px;
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 20px;
+        border-radius: 50px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .content_text{
+        height: 400px;
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: whitesmoke;
+    }
+    .admin{
+        height: 100%;
+        width: 23%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: whitesmoke;
+        border-radius: 50px;
+    }
+    .admin_img{
+        height: 70%;
+        width: 48%;
+    }
+    .admin_text{
+        height: 50%;
+        width: 48%;
+    }
+    .content_text_left{
+        height: 70%;
+        width: 35%;
+        margin-left: 10%;
+        padding: 30px;
+    }
+    .content_text_right{
+        height: 100%;
+        width: 50%;
+        margin-left: 10%;
+        background: url("../../../image/hamXe.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        border-top-left-radius: 45%;
+        border-bottom-left-radius: 45%;
+    }
+</style>

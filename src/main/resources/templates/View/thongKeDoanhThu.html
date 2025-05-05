@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="get" action="/thong-ke">
+    <label for="startDate">Từ ngày:</label>
+    <input type="date" id="startDate" name="startDate" required>
+
+    <label for="endDate">Đến ngày:</label>
+    <input type="date" id="endDate" name="endDate" required>
+
+    <button type="submit">Thống kê</button>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Mã doanh thu</th>
+        <th>Tiền doanh thu</th>
+        <th>Thời gian lưu</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="dt : ${doanhThu}">
+        <td th:text="${dt.id}"></td>
+        <td th:text="${dt.maDoanhThu}"></td>
+        <td th:text="${dt.tienDoanhThu}"></td>
+        <td th:text="${dt.tgLuu}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

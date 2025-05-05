@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div class="containerHomeAdmin">
+
+    <div class="bodyAdminHome">
+        <h1>Quản Lý Bãi Đỗ Xe</h1>
+        <hr>
+        <a href="/ql_baiDo" class="btn-them-bai-do">Trở Lại</a>
+
+
+        <hr>
+        <form th:object="${baiXe}" th:action="@{/bai-xe/them-bai-xe}" method="post">
+            <label>Mã Khu Vực:</label>
+            <input type="text" th:field="*{maKhuVuc}">
+
+            <label>Tên Khu Vực:</label>
+            <input type="text" th:field="*{tenKhuVuc}">
+
+            <label>Sức Chứa Tối Đa:</label>
+            <input type="number" th:field="*{sucChuaToiDa}">
+
+            <label>Địa Chỉ Bãi:</label>
+            <input type="text" th:field="*{diaChi}">
+
+            <label>Trạng Thái:</label>
+            <div class="radio-group">
+                <input type="radio" th:field="*{trangThai}" name="tt" value="Hoạt động"> Hoạt Động
+                <input type="radio" th:field="*{trangThai}" name="tt" value="Đóng cửa"> Đóng Cửa
+                <input type="radio" th:field="*{trangThai}" name="tt" value="Bảo trì"> Bảo Trì
+            </div>
+
+            <button type="submit">Thêm</button>
+        </form>
+
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:inline="javascript">
+    var loi = [[${loi}]];
+    var trangThai = [[${trangThai}]];
+
+    if (loi) {
+        Swal.fire({
+            title: trangThai === "success" ? "Thành công!" : "Lỗi!",
+            text: loi,
+            icon: trangThai === "success" ? "success" : "error",
+            confirmButtonText: "OK"
+        });
+    }
+</script>
+</body>
+<style>
+    .containerHomeAdmin {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Đảm bảo chiều cao tối thiểu bằng viewport */
+    }
+
+    .bodyAdminHome {
+        width: 100%;
+        background-color: white;
+        flex: 1; /* Để body tự động chiếm hết không gian còn lại */
+        padding: 0 10px;
+    }
+
+
+    h1 {
+        font-size: 28px;
+        color: #0072ff;
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+
+    .btn-them-bai-do {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #0072ff;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: all 0.3s;
+        margin-right: 10px;
+    }
+
+    .btn-them-bai-do:hover {
+        background: #005bb5;
+    }
+
+    img {
+        margin-top: 20px;
+        width: 110px;
+        height: auto;
+        border-radius: 50%;
+    }
+
+    /* Định dạng cho link */
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* =================== TỔNG THỂ FORM =================== */
+    form {
+        width: 400px; /* Chiều rộng form */
+        margin: 30px auto; /* Căn giữa */
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    /* =================== NHÃN FORM =================== */
+    form label {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    /* =================== INPUT TEXT & NUMBER =================== */
+    form input[type="text"],
+    form input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.3s;
+    }
+
+    form input[type="text"]:focus,
+    form input[type="number"]:focus {
+        border-color: #0072ff;
+        box-shadow: 0 0 5px rgba(0, 114, 255, 0.5);
+    }
+
+    /* =================== RADIO BUTTON =================== */
+    .radio-group {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        margin: 10px 0;
+    }
+
+    .radio-group input {
+        accent-color: #0072ff;
+        transform: scale(1.2);
+    }
+
+    /* =================== NÚT SUBMIT =================== */
+    form button {
+        width: 100%;
+        padding: 10px;
+        background: #0072ff;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 16px;
+    }
+
+    form button:hover {
+        background: #005bb5;
+    }
+
+</style>
+</html>

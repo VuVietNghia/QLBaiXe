@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="audio_section">
+    <button onclick="playAudio()" class="btn_play_audio">▶️ Nghe ghi âm</button>
+    <audio id="audioPlayer" style="display: none;">
+        <source th:src="@{/image/ra.mp3}" type="audio/mpeg">
+        Trình duyệt không hỗ trợ audio.
+    </audio>
+</div>
+
+<script>
+    function playAudio() {
+        const audio = document.getElementById("audioPlayer");
+        audio.play();
+    }
+</script>
+
+</body>
+</html>

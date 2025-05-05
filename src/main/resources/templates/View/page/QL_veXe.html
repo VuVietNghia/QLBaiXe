@@ -1,0 +1,308 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Thư viện alert đẹp -->
+</head>
+<body>
+<button class="btn btn-success" onclick="toggleForm()" style="margin-left: 90%">Thêm vé xe</button>
+<div id="overlay"></div>
+<div id="form_window">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16" onclick="toggleForm()" style="margin-left: 95%; margin-top: 20px">
+        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708"/>
+    </svg>
+    <h1 style="text-align: center; margin-bottom: 30px">Đăng ký vé xe</h1>
+    <form th:action="@{/saveVeXe}" th:object="${newVX}" method="post">
+        <input type="hidden" name="id" th:field="*{id}">
+        <input type="hidden" name="ngayDangKy" th:field="*{ngayDangKy}">
+        <input type="hidden" name="trangThaiVe" th:field="*{trangThaiVe}">
+        <input type="hidden" name="donGia" th:field="*{donGia}">
+        <div class="veXe_top">
+            <div class="veXe_left">
+                <div class="mb-3">
+                    <label class="form-label">Mã vé xe: </label>
+                    <input type="text" name="maVe" th:field="*{maVe}" class="form-control" placeholder="Nhập mã vé xe!"><br>
+                    <i style="color: red" th:errors="*{maVe}"></i>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên loại vé: </label>
+                    <select name="idLoaiVe" th:field="*{idLoaiVe}" class="form-control">
+                        <option value="">--Chọn loại vé xe--</option>
+                        <option th:each="loaiVe:${listLoaiVe}" th:value="${loaiVe.id}" th:text="${loaiVe.tenLoaiVe}"></option>
+                    </select><br>
+                    <i style="color: red" th:errors="*{idLoaiVe}"></i>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên khách hàng: </label>
+                    <input type="text" name="tenKH" th:field="*{tenKH}" placeholder="Nhập tên khách hàng!" class="form-control"><br>
+                    <i style="color: red" th:errors="*{tenKH}"></i>
+                </div>
+            </div>
+            <div class="veXe_between">
+                <div class="mb-3">
+                    <label class="form-label">Biển số xe: </label>
+                    <input type="text" name="bienSoXe" th:field="*{bienSoXe}" class="form-control" placeholder="Nhập biển số xe!">
+                    <br>
+                    <i style="color: red" th:errors="*{bienSoXe}"></i>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Loại xe: </label>
+                    <select name="loaiPT" th:field="*{loaiPT}" class="form-control">
+                        <option value="">--Chọn loại xe--</option>
+                        <option th:each="lpt:${listLoaiPT}" th:value="${lpt.id}" th:text="${lpt.tenPT}"></option>
+                    </select><br>
+                    <i style="color: red" th:errors="*{loaiPT}"></i>
+                </div>
+            </div>
+            <div class="veXe_right">
+                <div class="mb-3">
+                    <label class="form-label">Ngày hết hạn: </label>
+                    <input type="date" name="ngayHetHan" th:field="*{ngayHetHan}" class="form-control" placeholder="Nhập ngày hết hạn!"><br>
+                    <i style="color: red" th:errors="*{ngayHetHan}"></i>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên khu vực: </label>
+                    <select name="idQlBai" th:field="*{idQlBai}" class="form-control">
+                        <option value="">--Chọn khu vực--</option>
+                        <option th:each="BX:${listQLBX}" th:value="${BX.id}" th:text="${BX.idBaiXe.tenKhuVuc}"></option>
+                    </select><br>
+                    <i style="color: red" th:errors="*{idQlBai}"></i>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success" style="width: 40%; margin-left: 30%; margin-top: 30px">Thêm vé xe</button>
+    </form>
+</div>
+<div class="loc_VX">
+    <form th:action="@{/locVeXeByLoaiVe}" th:object="${newVX}" method="get" class="form_loc">
+        <select name="idLoaiVe" th:field="*{idLoaiVe}" class="slc_loc">
+            <option th:each="lvx:${listLoaiVe}" th:value="${lvx.id}" th:text="${lvx.tenLoaiVe}"></option>
+        </select>
+        <button type="submit" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
+            </svg>
+        </button>
+    </form>
+    <form th:action="@{/locVeXeByLoaiPT}" th:object="${newVX}" method="get" class="form_loc">
+        <select name="loaiPT" th:field="*{loaiPT}" class="slc_loc">
+            <option th:each="lx:${listLoaiPT}" th:value="${lx.id}" th:text="${lx.tenPT}"></option>
+        </select>
+        <button type="submit" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
+            </svg>
+        </button>
+    </form>
+    <form th:action="@{/locVeXeByDonGia}" th:object="${newVX}" method="get" class="form_loc">
+        <select name="donGia" th:field="*{donGia}" class="slc_loc">
+            <option value="3000">3000</option>
+            <option value="60000">60000</option>
+            <option value="80000">80000</option>
+            <option value="120000">120000</option>
+        </select>
+        <button type="submit" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
+            </svg>
+        </button>
+    </form>
+    <form th:action="@{/locVeXeByTrangThai}" th:object="${newVX}" method="get" class="form_loc">
+        <select name="trangThaiVe" th:field="*{trangThaiVe}" class="slc_loc">
+            <option value="Còn hạn">Còn hạn</option>
+            <option value="Hết hạn">Hết hạn</option>
+        </select>
+        <button type="submit" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
+        </svg>
+        </button>
+    </form>
+</div>
+
+<table class="table">
+    <thead class="table table-success">
+    <tr>
+        <th>Mã vé xe</th>
+        <th>Tên loại vé</th>
+        <th>Tên khách hàng</th>
+        <th>Biển số xe</th>
+        <th>Loại xe</th>
+        <th>Đơn giá</th>
+        <th>Ngày đăng ký</th>
+        <th>Ngày hết hạn</th>
+        <th>Tên khu vực</th>
+        <th>Trạng thái</th>
+        <th>Thao tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vx:${listVX}">
+        <td th:text="${vx.maVe}"></td>
+        <td th:text="${vx.idLoaiVe.tenLoaiVe}"></td>
+        <td th:text="${vx.tenKH}"></td>
+        <td th:text="${vx.bienSoXe}"></td>
+        <td th:text="${vx.loaiPT.tenPT}"></td>
+        <td th:text="${vx.donGia}"></td>
+        <td th:text="${vx.ngayDangKy}"></td>
+        <td th:text="${vx.ngayHetHan}"></td>
+        <td th:text="${vx.idQlBai.idBaiXe.tenKhuVuc}"></td>
+        <td th:text="${vx.trangThaiVe}"></td>
+        <td>
+            <a th:href="@{/editVX/{id}(id=${vx.id})}" class="btn btn-primary">Cập nhật</a>
+            <a th:href="@{/deleteVX/{id}(id=${vx.id})}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<nav class="nav_phanTrang">
+    <ul class="pagination">
+        <li class="page-item" th:classappend="${trangDau == 0}?'disabled'">
+            <a class="page-link" th:href="@{/ql_veXe (page=0)}">Trang đầu</a>
+        </li>
+        <li class="page-item" th:classappend="${trangDau == 0}?'disabled'">
+            <a class="page-link" th:href="@{/ql_veXe (page=${trangDau - 1})}"><<<</a>
+        </li>
+        <li class="page-item active">
+            <span class="page-link">[[${trangDau + 1}]]</span>
+        </li>
+        <li class="page-item" th:classappend="${trangDau + 1 == tongTrang}?'disabled'">
+            <a class="page-link" th:href="@{/ql_veXe (page=${trangDau + 1})}">>>></a>
+        </li>
+        <li class="page-item" th:classappend="${trangDau + 1 ==tongTrang}?'disabled'">
+            <a class="page-link" th:href="@{/ql_veXe (page=${tongTrang -1})}">Trang cuối</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    function toggleForm() {
+        var form = document.getElementById("form_window");
+        var overlay = document.getElementById("overlay");
+
+        var isHidden = (form.style.display === "none" || form.style.display === "");
+
+        form.style.display = isHidden ? "block" : "none";
+        overlay.style.display = isHidden ? "block" : "none";
+    }
+</script>
+
+<script th:inline="javascript">
+    let message = /*[[${message}]]*/ null;
+    if (message !== null) {
+        Swal.fire({
+            title: 'Thông báo',
+            text: message,
+            icon: 'error',
+            confirmButtonText: 'OK',
+            position: 'top'
+        });
+    }
+
+    let type = /*[[${type}]]*/ null;
+    if (type !== null) {
+        Swal.fire({
+            title: 'Thông báo',
+            text: type,
+            icon: 'success',
+            confirmButtonText: 'OK',
+            position: 'top'
+        });
+    }
+</script>
+</body>
+</html>
+<style>
+    body{
+        padding-top: 50px;
+    }
+    form{
+        height: 80%;
+        width: 90%;
+        margin-left: 5%;
+        margin-bottom: 30px;
+    }
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 999;
+    }
+    .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+        display: none;
+    }
+    #form_window {
+        height: 650px;
+        width: 60%;
+        position: fixed;
+        top: 10px;
+        left: 25%;
+        background-color: white;
+        border-radius: 10px;
+        display: none;
+        z-index: 1000;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+    .veXe_top {
+        height: 80%;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+    .veXe_left{
+        height: 100%;
+        width: 32%;
+    }
+    .veXe_right{
+        height: 100%;
+        width: 32%;
+    }
+    .veXe_between{
+        height: 100%;
+        width: 32%;
+    }
+    .table{
+        height: auto;
+        width: 98%;
+        margin-left: 1%;
+    }
+    .loc_VX {
+        height: 60px;
+        width: 80%;
+        margin-left: 5%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    .form_loc{
+        height: 90%;
+        width: 30%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 30px;
+    }
+    .slc_loc{
+        height: 70%;
+        width: 80%;
+    }
+    .nav_phanTrang{
+        height: auto;
+        width: 30%;
+        position: absolute;
+        bottom: 100px;
+        left: 35%;
+    }
+</style>

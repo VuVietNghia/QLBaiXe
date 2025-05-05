@@ -1,0 +1,236 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trang Hỗ Trợ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Thư viện alert đẹp -->
+</head>
+<body class="bg-light">
+<div class="container py-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h1 class="text-center mb-0 py-2">
+                <i class="fas fa-hands-helping me-2"></i>Trang Hỗ Trợ
+            </h1>
+        </div>
+        <div class="card-body p-4">
+            <!-- Form tìm kiếm -->
+            <form action="/ho-tro/sdt" method="get" class="mb-4">
+                <div class="input-group">
+                        <span class="input-group-text bg-white">
+                            <i class="fas fa-phone"></i>
+                        </span>
+                    <input type="text" name="sdt" class="form-control no-outline"
+                           placeholder="Nhập số điện thoại để tìm kiếm"
+                           th:value="${sdt != null ? sdt : ''}">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search me-2"></i>Tìm kiếm
+                    </button>
+                </div>
+            </form>
+
+            <!-- Bảng dữ liệu -->
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered align-middle">
+                    <thead class="table-dark">
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Mã hỗ trợ</th>
+                        <th class="text-center">Họ tên người cần hỗ trợ</th>
+                        <th class="text-center">Số điện thoại</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Tên khách hàng</th>
+                        <th class="text-center">Tên nhân viên</th>
+                        <th class="text-center">Nội dung</th>
+                        <th class="text-center">Trạng thái</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ht : ${hoTro}">
+                        <td class="text-center" th:text="${ht.id}"></td>
+                        <td class="text-center" th:text="${ht.maHoTro}"></td>
+                        <td th:text="${ht.hoTenNguoiHoTro}"></td>
+                        <td th:text="${ht.sdt}"></td>
+                        <td th:text="${ht.email}"></td>
+                        <td th:text="${ht.idKhachHang.hoTen}"></td>
+                        <td th:text="${ht.idNhanVien.hoTenNV}"></td>
+                        <td>
+                            <span th:text="${ht.noiDung}" class="highlight-content d-block"></span>
+                        </td>
+                        <td class="text-center">
+                            <span class="status-badge d-inline-flex align-items-center fw-bold px-3 py-2 rounded-pill"
+                                  th:classappend="${ht.trangThaiHoTro == 1 ? 'bg-success text-white' : (ht.trangThaiHoTro == 2 ? 'bg-warning text-dark' : 'bg-danger text-white')}"
+                                  th:attr="data-bs-toggle='tooltip', data-bs-placement='top',
+                                           data-bs-title=${ht.trangThaiHoTro == 1 ? 'Yêu cầu đã hoàn tất' : (ht.trangThaiHoTro == 2 ? 'Yêu cầu đang xử lý' : 'Yêu cầu chưa được xử lý')}"
+                                  role="status" aria-live="polite">
+                                <i class="me-2"
+                                   th:class="${ht.trangThaiHoTro == 1 ? 'fas fa-check-circle' : (ht.trangThaiHoTro == 2 ? 'fas fa-hourglass-half' : 'fas fa-exclamation-circle')}">
+                                </i>
+                                <span th:text="${ht.trangThaiHoTro == 1 ? 'Đã được giải quyết' : (ht.trangThaiHoTro == 2 ? 'Đang được giải quyết' : 'Chưa được giải quyết')}"></span>
+                            </span>
+                        </td>
+                        <td style="min-width: 220px; display: flex; justify-content: space-between; align-items: center">
+                            <form th:action="@{/ho-tro/updateTrangThai}" method="post">
+                                <input type="hidden" name="id" th:value="${ht.id}"/>
+                                <select name="trangThaiHoTro" class="form-select form-select-sm" onchange="this.form.submit()">
+                                    <option disabled>Chọn trạng thái hỗ trợ</option>
+                                    <option value="1" th:selected="${ht.trangThaiHoTro == 1}">Đã được giải quyết</option>
+                                    <option value="2" th:selected="${ht.trangThaiHoTro == 2}">Đang được giải quyết</option>
+                                    <option value="3" th:selected="${ht.trangThaiHoTro == 3}">Chưa được giải quyết</option>
+                                </select>
+                            </form>
+                            <a th:href="@{/deleteHT/{id}(id=${ht.id})}" class="btn btn-danger" onclick="return confirm('Bạn muốn xóa!')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(hoTro)}">
+                        <td colspan="10" class="text-center py-4 text-muted">
+                            Không tìm thấy dữ liệu phù hợp
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-light text-muted text-center">
+            <small>Cập nhật lần cuối: <span th:text="${#dates.format(new java.util.Date(), 'dd/MM/yyyy HH:mm')}"></span></small>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .highlight-content {
+        color: #dc3545;
+        font-weight: 600;
+        background-color: rgba(220, 53, 69, 0.1);
+        padding: 6px 12px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .highlight-content:hover {
+        background-color: rgba(220, 53, 69, 0.2);
+        transform: scale(1.02);
+    }
+
+    .table th {
+        background-color: #343a40;
+        color: white;
+        vertical-align: middle;
+    }
+
+    .table td {
+        padding: 12px;
+    }
+
+    .input-group {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+        .table {
+            font-size: 14px;
+        }
+        .highlight-content {
+            padding: 4px 8px;
+        }
+        .input-group {
+            max-width: 100%;
+        }
+    }
+
+    .no-outline:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .table {
+        font-size: 15px;
+    }
+
+    .table td select {
+        min-width: 200px;
+    }
+
+    .status-badge {
+        font-size: 0.9rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: default;
+    }
+
+    .status-badge:hover {
+        transform: scale(1.05);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .status-badge i {
+        font-size: 1rem;
+        vertical-align: middle;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
+<script th:inline="javascript">
+    let message = /*[[${message}]]*/ null;
+    if (message !== null) {
+        Swal.fire({
+            title: 'Thông báo',
+            text: message,
+            icon: 'error',
+            confirmButtonText: 'OK',
+            position: 'top'
+        });
+    }
+
+    let type = /*[[${type}]]*/ null;
+    if (type !== null) {
+        Swal.fire({
+            title: 'Thông báo',
+            text: type,
+            icon: 'success',
+            confirmButtonText: 'OK',
+            position: 'top'
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Thư viện alert đẹp -->
+</head>
+<body>
+<h1 style="text-align: center;margin-bottom: 30px">Khách hàng chi tiết</h1>
+<form th:action="@{/updateKH}" th:object="${newKH}" method="post"
+      style=" height: 650px;
+        width: 70%;
+        margin-left: 15%;
+        margin-bottom: 100px;"
+>
+    <input type="hidden" name="id" th:field="*{id}">
+    <div class="form_top">
+        <div class="form_left">
+            <div class="mb-3">
+                <label for="maKH" class="form-label">Mã khách hàng: </label>
+                <input type="text" id="maKH" name="maKH" th:field="*{maKH}" class="form-control" placeholder="Nhập mã khách hàng!"><br>
+                <i style="color: red" th:errors="*{maKH}"></i>
+            </div>
+            <div class="mb-3">
+                <label for="hoTenKH" class="form-label">Họ & tên: </label>
+                <input type="text" id="hoTenKH" name="hoTen" th:field="*{hoTen}" class="form-control" placeholder="Nhập họ tên!"><br>
+                <i style="color: red" th:errors="*{hoTen}"></i>
+            </div>
+            <div class="mb-3">
+                <label for="cccd" class="form-label">Số CCCD: </label>
+                <input type="text" id="cccd" name="cccd" th:field="*{cccd}" class="form-control" placeholder="Nhập số CCCD!"><br>
+                <i style="color: red" th:errors="*{cccd}"></i>
+            </div>
+            <div class="mb-3">
+                <label for="ngaySinh" class="form-label">Ngày sinh: </label>
+                <input type="date" id="ngaySinh" name="ngaySinh" th:value="*{ngaySinh}" class="form-control"><br>
+                <i style="color: red" th:errors="*{ngaySinh}"></i>
+            </div>
+        </div>
+        <div class="form_right">
+            <div class="mb-3">
+                <label for="sdt" class="form-label">Số điện thoại: </label>
+                <input type="text" id="sdt" name="sdt" th:field="*{sdt}" class="form-control" placeholder="Nhập số điện thoại!"><br>
+                <i style="color: red" th:errors="*{sdt}"></i>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email: </label>
+                <input type="text" id="email" name="email" th:field="*{email}" class="form-control" placeholder="Nhập email!"><br>
+                <i style="color: red" th:errors="*{email}"></i>
+            </div>
+
+            <div class="mb-3">
+                <label for="trangThai" class="form-label">Trạng thái: </label>
+                <select id="trangThai" name="trangThai" th:field="*{trangThai}" class="form-control">
+                    <option value="Đang hoạt động">Đang hoạt động</option>
+                    <option value="Hết hạn vé">Hết hạn vé</option>
+                </select><br>
+                <i style="color: red" th:errors="*{trangThai}"></i>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success" style="margin-top: 17px; width: 50%; margin-left: 25%">Cập nhật khách hàng</button>
+</form>
+
+<script th:inline="javascript">
+    let message = /*[[${message}]]*/ null;
+    if (message !== null) {
+        Swal.fire({
+            title: 'Thông báo',
+            text: message,
+            icon: 'error',
+            confirmButtonText: 'OK',
+            position: 'top'
+        });
+    }
+
+    let type = /*[[${type}]]*/ null;
+    if (type !== null) {
+        Swal.fire({
+            title: 'Thông báo',
+            text: type,
+            icon: 'success',
+            confirmButtonText: 'OK',
+            position: 'top'
+        });
+    }
+</script>
+</body>
+</html>
+<style>
+    body{
+        padding-top: 30px;
+    }
+    form{
+        height: 500px;
+        width: 60%;
+        margin-left: 20%;
+        padding: 20px;
+    }
+    .form_top{
+        height: 80%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .form_left{
+        height: 100%;
+        width: 48%;
+    }
+    .form_right{
+        height: 100%;
+        width: 48%;
+    }
+</style>

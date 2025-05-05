@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý xe ra/vào</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .containerHomeAdmin {
+            width: 90%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .bodyAdminHome {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            color: #0072ff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-them-bai-do {
+            display: block;
+            padding: 12px 20px;
+            background: #4aad4a;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-them-bai-do:hover {
+            background: rgb(36, 86, 46);
+            transform: scale(1.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #0072ff;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .pagination ul li a {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            color: black;
+            text-decoration: none;
+        }
+
+        .pagination ul li.active a {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .pagination ul {
+            list-style: none;
+            display: flex;
+            gap: 10px;
+            padding: 0;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="containerHomeAdmin">
+    <div class="bodyAdminHome">
+        <h1>Quản Lý Xe Ra Vào</h1>
+        <hr>
+        <div class="btn-container">
+            <a href="/thong-tin-vao" class="btn-them-bai-do">Quản Lý Xe Vào</a>
+            <a href="/thong-tin-ra" class="btn-them-bai-do">Quản Lý Xe Ra</a>
+        </div>
+        <hr>
+        <table>
+            <tr>
+                <th>STT</th>
+                <th>Mã Vé Gửi Xe</th>
+                <th>Chủ Xe</th>
+                <th>Biển Số</th>
+                <th>Giờ Vào Gửi</th>
+                <th>Giờ Lấy Xe</th>
+                <th>Trạng Thái</th>
+            </tr>
+            <th:block th:each="lx, iterStat : ${listXeRaVao}">
+                <tr>
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${lx.idVeXe.maVe}"></td>
+                    <td th:text="${lx.idVeXe.tenKH}"></td>
+                    <td th:text="${lx.idVeXe.bienSoXe}"></td>
+                    <td th:text="${#temporals.format(lx.thoiGianXeVao, 'yyyy/MM/dd HH:mm:ss')}"></td>
+                    <td th:text="${lx.thoiGianXeRa != null ? #temporals.format(lx.thoiGianXeRa, 'yyyy/MM/dd HH:mm:ss') : ''}"></td>
+                    <td th:text="${lx.trangThai}"></td>
+                </tr>
+            </th:block>
+        </table>
+
+        <div class="pagination">
+            <ul>
+                <li th:if="${listXeRaVao.hasPrevious()}">
+                    <a th:href="@{'/ql_xeRa_Vao'(page=${listXeRaVao.number - 1}, size=${listXeRaVao.size})}">« Trước</a>
+                </li>
+
+                <li th:each="i : ${#numbers.sequence(0, listXeRaVao.totalPages - 1)}"
+                    th:classappend="${i == listXeRaVao.number} ? 'active'">
+                    <a th:href="@{'/ql_xeRa_Vao'(page=${i}, size=${listXeRaVao.size})}"
+                       th:text="${i + 1}">1</a>
+                </li>
+
+                <li th:if="${listXeRaVao.hasNext()}">
+                    <a th:href="@{'/ql_xeRa_Vao'(page=${listXeRaVao.number + 1}, size=${listXeRaVao.size})}">Sau »</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<audio id="audioPlayerVao" preload="auto">
+    <source src="/image/chao.mp3" type="audio/mpeg">
+    Trình duyệt không hỗ trợ audio.
+</audio>
+
+
+
+<audio id="audioPlayerRa" preload="auto">
+    <source src="/image/ra.mp3" type="audio/mpeg">
+    Trình duyệt không hỗ trợ audio.
+</audio>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:inline="javascript">
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+    const action = urlParams.get('loi');
+
+    if (type === 'success') {
+        let message = 'Thao tác thành công.';
+        let audio = null;
+
+        if (action === 'xevao') {
+            message = 'Xe vào bãi thành công.';
+            audio = document.getElementById("audioPlayerVao");
+        } else if (action === 'xera') {
+            message = 'Xe ra bãi thành công.';
+            audio = document.getElementById("audioPlayerRa");
+        }
+
+        // Phát âm thanh nếu có
+        if (audio) {
+            audio.play().catch(err => console.log("Không thể phát âm thanh:", err));
+        }
+
+        Swal.fire({
+            title: 'Thành công!',
+            text: message,
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+
+    } else if (type === 'error') {
+        Swal.fire({
+            title: 'Lỗi!',
+            text: 'Đã xảy ra lỗi trong quá trình xử lý.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="containerHomeAdmin">
+
+    <div class="bodyAdminHome">
+        <h1>Quản Lý Bãi Đỗ Xe</h1>
+        <hr>
+        <a href="/ql_baiDo" class="btn-them-bai-do">Trở Lại </a>
+        <a href="/bai-xe/them "class="btn-them-bai-do">Thêm Bãi Đỗ Xe</a>
+        <hr>
+        <form th:object="${baiDo}" th:action="@{/bai-do/update-bai-do-HD}" method="post">
+
+            <input th:field="*{id}" hidden>
+
+            <label>Mã Khu Vưc:</label>
+            <input type="text" th:field="*{maKhuVuc}">
+
+            <label>Tên Khu Vực:</label>
+            <input type="text" th:field="*{tenKhuVuc}">
+            </select>
+
+            <label>Số Lượng Xe Tối Đa trong Bãi:</label>
+            <input type="number" th:field="*{sucChuaToiDa}">
+
+            <label>Địa Chỉ Bãi:</label>
+            <input type="text" th:field="*{diaChi}">
+
+            <label>Trạng Thái:</label>
+            <div class="radio-group">
+                <input type="radio" th:field="*{trangThai}" name="tt" value="Hoạt động"> Hoạt Động
+                <input type="radio" th:field="*{trangThai}" name="tt" value="Đóng cửa"> Đóng Cửa
+                <input type="radio" th:field="*{trangThai}" name="tt" value="Bảo trì"> Bảo Trì
+            </div>
+
+            <button type="submit">Cập Nhật</button>
+            <a th:href="@{/bai-do/delete/{id}(id=${baiDo.id})}" class="btn-delete"
+               onclick="return confirm('Bạn có muốn xóa bãi xe : ' + this.getAttribute('data-name') + ', không?')"
+               th:attr="data-name=${baiDo.tenKhuVuc}">
+                Xóa
+            </a>
+
+
+
+        </form>
+
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:inline="javascript">
+    var loi = [[${loi}]];
+    var trangThai = [[${trangThai}]];
+
+    if (loi) {
+        Swal.fire({
+            title: trangThai === "success" ? "Thành công!" : "Lỗi!",
+            text: loi,
+            icon: trangThai === "success" ? "success" : "error",
+            confirmButtonText: "OK"
+        });
+    }
+</script>
+</body>
+<style>
+    .containerHomeAdmin {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Đảm bảo chiều cao tối thiểu bằng viewport */
+    }
+
+    .bodyAdminHome {
+        width: 100%;
+        background-color: white;
+        flex: 1; /* Để body tự động chiếm hết không gian còn lại */
+        padding: 0 10px;
+    }
+
+
+    h1 {
+        font-size: 28px;
+        color: #0072ff;
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+
+    .btn-them-bai-do {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #0072ff;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: all 0.3s;
+        margin-right: 10px;
+    }
+
+    .btn-them-bai-do:hover {
+        background: #005bb5;
+    }
+
+    img {
+        margin-top: 20px;
+        width: 110px;
+        height: auto;
+        border-radius: 50%;
+    }
+
+    /* Định dạng cho link */
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* =================== FORM =================== */
+    form {
+        width: 50%;
+        margin: 30px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .radio-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .radio-group input {
+        margin-right: 5px;
+    }
+
+    button {
+        padding: 10px;
+        background: #0072ff;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    button:hover {
+        background: #005bb5;
+    }
+
+    /* =================== NÚT XÓA =================== */
+    .btn-delete {
+        display: inline-block;
+        padding: 10px;
+        background: red;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background 0.3s;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .btn-delete:hover {
+        background: darkred;
+    }
+
+</style>
+</html>

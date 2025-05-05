@@ -1,0 +1,98 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+<div class="content_quanLy">
+    <div class="content_quanLy_top">
+    <div class="nav_quanLy">
+    <ul>
+        <li>
+            <a th:href="@{/ql_nhanVien}" target="content_admin_ql" class="a_nav">Quản lý nhân viên</a>
+        </li>
+        <li>
+            <a th:href="@{/ql_nguoiDung}" target="content_admin_ql" class="a_nav">Quản lý người dùng</a>
+        </li>
+        <li>
+            <a th:href="@{/ql_khachHang}" target="content_admin_ql" class="a_nav">Quản lý khách hàng</a>
+        </li>
+        <li>
+            <a th:href="@{/ql_veXe}" target="content_admin_ql" class="a_nav">Quản lý vé xe</a>
+        </li>
+        <li>
+            <a th:href="@{/ql_phuongTien}" target="content_admin_ql" class="a_nav">Quản lý phương tiện</a>
+        </li>
+        <li>
+            <a th:href="@{/ql_xeRa_Vao}" target="content_admin_ql" class="a_nav">Quản lý xe ra/vào</a>
+        </li>
+        <li>
+            <a th:href="@{/ql_baiXe}" target="content_admin_ql" class="a_nav">Quản lý bãi xe</a>
+        </li>
+        <li>
+            <a th:href="@{/ql_doanhThu}" target="content_admin_ql" class="a_nav">Quản lý doanh thu</a>
+        </li>
+    </ul>
+    </div>
+    </div>
+    <div class="content_quanLy_right">
+        <iframe src="ql_nhanVien" id="content-frame" name="content_admin_ql"
+                style="width:100%; height: 100%; border:none;"></iframe>
+    </div>
+</div>
+</body>
+</html>
+
+<style>
+    body{
+        padding: 0px;
+        margin: 0px;
+    }
+    .content_quanLy{
+        height: 1250px;
+        width: 100%;
+        padding-top: 0px;
+    }
+    .content_quanLy_top{
+        height: 5%;
+        width: 100%;
+        border-radius: 50px;
+        padding: 0px;
+    }
+    .content_quanLy_right{
+        height: 100%;
+        width: 100%;
+    }
+    .nav_quanLy{
+        height: 100%;
+        width: 100%;
+        padding: 0px;
+    }
+   ul{
+       height: 100%;
+       width: 100%;
+       display: flex;
+       justify-content: space-around;
+       align-items: center;
+       border-radius: 50px;
+       padding: 0px;
+   }
+   li{
+       height: 100%;
+       width: 12.5%;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       background-color: whitesmoke;
+   }
+   li:hover{
+       background-color: lightgray;
+   }
+   ul>li>a{
+       text-decoration: none;
+       color: black;
+       font-size: 20px;
+   }
+</style>

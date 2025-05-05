@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Tin Tức</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            height: 1340px;
+            background: linear-gradient(to bottom, #f0f2f5, #ffffff);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .header {
+            padding: 20px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .news-container {
+            padding: 40px 60px;
+        }
+
+        .news-card {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .news-card:hover {
+            transform: scale(1.02);
+        }
+
+        .news-image {
+            height: 250px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .news-body {
+            padding: 20px;
+        }
+
+        .news-body h5 {
+            font-weight: bold;
+        }
+
+        .footer {
+            background-color: #212529;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Bản tin hàng ngày</h1>
+</div>
+
+<div class="news-container container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="news-card">
+                <img src="../../../image/nang_nong_TP_HCM.png" class="news-image" alt="Tin 1">
+                <div class="news-body">
+                    <h5>Thành phố Hồ Chí Minh đón nắng đẹp đầu tuần</h5>
+                    <p>Dự báo thời tiết cho thấy TPHCM sẽ có nắng nhẹ trong vài ngày tới, tạo điều kiện thuận lợi cho các hoạt động ngoài trời.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="news-card">
+                <img src="../../../image/A_I.jpg" class="news-image" alt="Tin 2">
+                <div class="news-body">
+                    <h5>Công nghệ AI đang thay đổi cách làm việc</h5>
+                    <p>Trí tuệ nhân tạo không chỉ giúp tăng năng suất mà còn mở ra nhiều cơ hội mới trong lĩnh vực giáo dục và y tế.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="news-card">
+                <img src="../../../image/Thi_THPT.jpg" class="news-image" alt="Tin 3">
+                <div class="news-body">
+                    <h5>Học sinh cả nước chuẩn bị cho kỳ thi tốt nghiệp</h5>
+                    <p>Bộ GD&ĐT công bố lịch thi tốt nghiệp THPT năm nay, nhấn mạnh yếu tố an toàn và minh bạch trong tổ chức.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
